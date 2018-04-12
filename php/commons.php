@@ -19,7 +19,7 @@
 
     /** Logs in to the localhost MySQL server. */
     function get_mysqli_localhost() {
-        $con = new mysqli("localhost", "root", "toor", "invdb");
+        $con = new mysqli("localhost", "root", "", "invdb");
 		
 		if (mysqli_connect_errno()) {
             printf("Connection Error: %s\n", $con->connect_error);

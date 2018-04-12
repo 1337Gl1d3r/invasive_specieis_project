@@ -154,7 +154,8 @@
         $query = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($query);
         echo '<div class="jumbotron">';
-        if(isset($_SESSION["user"]))
+        // XX FOR DEBUGGING - CAUSING EDIT ISSUES
+        if(isset($_SESSION["xx"]))
         {
           echo ('<form class="form-edit" method="post" action="?edit='.$row['inv_sci_name'].'" id="form-edit">');
           echo ('<input type="hidden" name="type" value="invasive_species">');
@@ -223,7 +224,7 @@
       //
         echo '<div class="jumbotron">';
         $image = "ID_GUIDE_LOGO.png";           
-        $path = "images/";
+        $path = "../images/";
         echo '<img src="'.$path.''.$image.'" />';
         echo '<p>'."YOU ARE HOME".'</p>';
         echo '</div>';

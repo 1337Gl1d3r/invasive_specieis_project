@@ -17,6 +17,7 @@
   <body>
 
     <?php include_once "../php/commons.php"; ?>
+    <?php include_once "header.php"; ?>
 
     <main role="main" class="container">
 
@@ -167,7 +168,8 @@
         $query = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($query);
         echo '<div class="jumbotron">';
-        if(isset($_SESSION["user"]))
+        // XX FOR DEBUGGING - CAUSING EDIT ISSUES
+        if(isset($_SESSION["xx"]))
         {
           echo ('<form class="form-edit" method="post" action="?edit='.$row['inv_sci_name'].'" id="form-edit">');
           echo ('<input type="hidden" name="type" value="invasive_species">');
@@ -246,7 +248,7 @@
             echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
             echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
             $image = $row["thumbnail"];              
-            $path = "images/";
+            $path = "../images/";
             echo '<img src="'.$path.''.$image.'" width="200" />';
             echo '</div>';
             echo '</div>';
