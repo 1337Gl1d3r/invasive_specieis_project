@@ -57,9 +57,9 @@
 
     <main role="main" class="container">
 
-      <div class="starter-template">
-      <?php
-      
+    <div class="starter-template">
+    <?php
+    
       // ================================ FUNCTIONS ======================================
       
       function randallrelevant($conn, $plant_id)
@@ -80,11 +80,11 @@
               {        
                 echo "<p>" ."<strong>Life Cycle: </strong>". $row["lc_type"] .".". '</p>';    
                 echo "<p>" ."<strong>Flower Description: </strong>". $row["flower_desc"]. '</p>';      
-                echo "<p>" ."<strong>Leaf Description: </strong>". $row["leaf_desc"] .".". '</p>'; 
+                echo "<p>" ."<strong>Leaf Description: </strong>". $row["leaf_desc"]. '</p>'; 
                 echo "<p>" ."<strong>Stem Description: </strong>". $row["stem_desc"]. '</p>';     
-                echo "<p>" ."<strong>Root Description: </strong>". $row["root_desc"] .".". '</p>';     
+                echo "<p>" ."<strong>Root Description: </strong>". $row["root_desc"]. '</p>';     
                 echo "<p>" ."<strong>Seed Description: </strong>". $row["seed_desc"]. '</p>';
-                echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"] .".". '</p>';            
+                echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"]. '</p>';            
               }
 
               
@@ -128,12 +128,10 @@
               }                        
       }
       
-      // =============================== /FUNCTIONS ======================================     
+      // =============================== /FUNCTIONS ======================================    
+
+
       
-
-
-
-
       // =============================== CONNECTING ======================================
        
       $servername = "localhost";
@@ -174,10 +172,12 @@
         }
       }
         
-      // ============================== /CONNECTING ======================================    
+      // ============================== /CONNECTING ======================================       
 
 
-       
+
+  
+  
       // ================================ ACTIONS ========================================
        
       //
@@ -232,46 +232,14 @@
           echo '</div>';
         }
         echo '</div>';
-      }     
-      //
-      // --------------------------- Querying a Plant ------------------------------------
-      //
-      elseif(isset($_POST['submit']))
-      {
-        if (isset($_REQUEST['input'])) 
-        {
-
-          $input = mysqli_real_escape_string($conn, $_REQUEST['input']);
-          $sql = $sql = "SELECT * FROM `e_invasive_species` WHERE `inv_sci_name` LIKE '%".$input."%'";
-          $query = mysqli_query($conn, $sql);
-
-          if($query->num_rows > 0)
-          {
-            echo '<p>'."Your search returned ".$query->num_rows." results.".'</p>';
-            while ($row = mysqli_fetch_array($query))
-            { echo '<div class="jumbotron">';
-              echo '<div align="left">';
-              echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
-              echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
-              $image = $row["thumbnail"];              
-              $path = "images/";
-              echo '<img src="'.$path.''.$image.'" width="200" />';
-              echo '</div>';
-              echo '</div>';
-            }
-          }
-          else 
-          {
-            echo "<br>" . "Sorry, No results found.";
-          } 
-        }
-      }
+      }   
+  
       else
       {
       //
       // ------------------------ Looking at All Plants -----------------------------------
       //
-        $sql = $sql = "SELECT * FROM `e_invasive_species` LIMIT 10";
+        $sql = $sql = "SELECT * FROM `e_invasive_species`";
         $query = mysqli_query($conn, $sql);
 
         if($query->num_rows > 0)
@@ -289,8 +257,9 @@
           }
         }
       }
-    $conn->close();
-    ?>
+      
+      $conn->close();
+      ?>
       </div>
 
     </main><!-- /.container -->

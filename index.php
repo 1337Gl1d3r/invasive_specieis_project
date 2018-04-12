@@ -30,7 +30,7 @@
             <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">          
-            <a class="nav-link" href="index.php">All Invasive Species <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="all_invasive_species.php">All Invasive Species <span class="sr-only">(current)</span></a>
           </li>          
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
@@ -80,11 +80,11 @@
               {        
                 echo "<p>" ."<strong>Life Cycle: </strong>". $row["lc_type"] .".". '</p>';    
                 echo "<p>" ."<strong>Flower Description: </strong>". $row["flower_desc"]. '</p>';      
-                echo "<p>" ."<strong>Leaf Description: </strong>". $row["leaf_desc"] .".". '</p>'; 
+                echo "<p>" ."<strong>Leaf Description: </strong>". $row["leaf_desc"]. '</p>'; 
                 echo "<p>" ."<strong>Stem Description: </strong>". $row["stem_desc"]. '</p>';     
-                echo "<p>" ."<strong>Root Description: </strong>". $row["root_desc"] .".". '</p>';     
+                echo "<p>" ."<strong>Root Description: </strong>". $row["root_desc"]. '</p>';     
                 echo "<p>" ."<strong>Seed Description: </strong>". $row["seed_desc"]. '</p>';
-                echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"] .".". '</p>';            
+                echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"]. '</p>';            
               }
 
               
@@ -269,25 +269,15 @@
       else
       {
       //
-      // ------------------------ Looking at All Plants -----------------------------------
+      // --------------------------------- Home ------------------------------------------
       //
-        $sql = $sql = "SELECT * FROM `e_invasive_species` LIMIT 10";
-        $query = mysqli_query($conn, $sql);
+        echo '<div class="jumbotron">';
+        $image = "ID_GUIDE_LOGO.png";           
+        $path = "images/";
+        echo '<img src="'.$path.''.$image.'" />';
+        echo '<p>'."YOU ARE HOME".'</p>';
+        echo '</div>';
 
-        if($query->num_rows > 0)
-        {
-          while ($row = mysqli_fetch_array($query))
-          { echo '<div class="jumbotron">';
-            echo '<div align="left">';
-            echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
-            echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
-            $image = $row["thumbnail"];              
-            $path = "images/";
-            echo '<img src="'.$path.''.$image.'" width="200" />';
-            echo '</div>';
-            echo '</div>';
-          }
-        }
       }
     $conn->close();
     ?>
