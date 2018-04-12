@@ -1,12 +1,16 @@
 <?php
-include_once "header.php";
-include_once "php/commons.php";
-
 if($_SERVER["REQUEST_METHOD"] == "POST")
 { 
+	//init session
+	session_start();
+	
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "invdb";
 
-    // Connect to db
-    $conn = get_mysqli_localhost();
+    // Create connection
+    $conn = mysqli_connect($servername, $username, $password, $database);
 
     // Check connection
     if (!$conn) 

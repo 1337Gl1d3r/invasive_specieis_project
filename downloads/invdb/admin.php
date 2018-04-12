@@ -1,5 +1,6 @@
 <?php
-include_once "php/commons.php";
+session_start();
+
 
 if(!isset($_SESSION["user"]))
 {
@@ -8,8 +9,13 @@ if(!isset($_SESSION["user"]))
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    
-    $conn = get_mysqli_localhost();
+	
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "invdb";
+    // Create connection
+    $conn = mysqli_connect($servername, $username, $password, $database);
     // Check connection
     if (!$conn) 
 	{
@@ -213,7 +219,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 <!DOCTYPE html>
 <html>
-<!--
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -221,9 +226,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="starter-template.css" rel="stylesheet">
 </head>
--->
-
-<?php include_once "header.php"; ?>
 <body>
 
 
