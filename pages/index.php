@@ -17,7 +17,7 @@
   </head>
 
   <body>
-
+  <body background="../images/background.jpeg">
     <?php include_once "header.php"; ?>
 
     <main role="main" class="container">

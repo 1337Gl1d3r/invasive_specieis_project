@@ -15,7 +15,7 @@
   </head>
 
   <body>
-
+  <body background="../images/background.jpeg">
     <?php include_once "../php/commons.php"; ?>
     <?php include_once "header.php"; ?>
 
