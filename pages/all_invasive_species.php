@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -15,7 +14,7 @@
   </head>
 
   <body>
-
+  <body background="../images/background.jpeg">
 	  <?php include_once "header.php"; ?>
 
 
@@ -184,7 +183,11 @@
 
           if($query->num_rows > 0)
           {
-            echo '<p>'."Your search returned ".$query->num_rows." results.".'</p>';
+            echo '<div align="center">';
+            echo '<div class="jumbotron">';
+            echo "<strong>"."Your search returned ".$query->num_rows." results."."</strong>";
+            echo '</div>';
+            echo '</div>';
             while ($row = mysqli_fetch_array($query))
             { echo '<div class="jumbotron">';
               echo '<div align="left">';
@@ -213,6 +216,11 @@
 
         if($query->num_rows > 0)
         {
+          echo '<div align="center">';
+          echo '<div class="jumbotron">';
+          echo "<strong>"."Your search returned ".$query->num_rows." results."."</strong>";
+          echo '</div>';
+          echo '</div>';
           while ($row = mysqli_fetch_array($query))
           { echo '<div class="jumbotron">';
             echo '<div align="left">';

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <meta  http-equiv="Content-Type" content="text/html;  charset=iso-8859-1">
 
     <title>Starter Template for Bootstrap</title>
 
@@ -15,7 +15,40 @@
     <!-- Custom styles for this template -->
     <link href="../css/starter-template.css" rel="stylesheet">
   </head>
+  
+  
 
+  
+  
+  <div class="jumbotron">
+  <div align="center">
+  <img src="../images/ID_GUIDE_LOGO.png"/>
+
+  <p><body>
+    <h3>Search </h3>
+  <p></p>  
+  <form action="index.php" method="post" >
+     <input  type="text" name="input"><body>&nbsp;&nbsp;&nbsp;&nbsp;</body>
+     <select name="drop">
+      <option value="">Select...</option>
+      <option value="e_agency">Agency</option>     
+      <option value="e_animals">Animal</option>	  
+      <option value="e_distribution_method">Distribution Method</option>	
+      <option value="e_family">Family</option>	 
+      <option value="e_impacted_species">Impacted Species</option>
+      <option value="e_invasive_species">Invasive Species</option>
+      <option value="e_invasive_status">Invasive Status</option>   
+      <option value="e_life_cycle">Life Cycle</option>
+      <option value="e_plants">Plants</option>
+      <option value="e_pathogens">Pathogen</option>
+    </select> 
+    <body>&nbsp;&nbsp;&nbsp;&nbsp;</body>
+    <input type="submit" name="Go" value="Submit Query" />
+  </form>  
+  </div>
+  </div>
+  
+  
   <body>
   <body background="../images/background.jpeg">
     <?php include_once "header.php"; ?>
@@ -35,7 +68,7 @@
 
 
       // ================================ FUNCTIONS ======================================
-      
+            
       function randallrelevant($conn, $plant_id)
       {
         // print out all plant information
@@ -101,6 +134,8 @@
                 echo "<p>" ."<strong>Habitat: </strong>". $row["habitat"] . '</p>';                    
               }                        
       }
+      
+      
       if (isset($_GET['edit']))
       {
         $inv_sci_name = mysqli_real_escape_string($conn, $_GET['edit']);
@@ -217,19 +252,287 @@
           } 
         }
       }
-      else
-      {
-      //
-      // --------------------------------- Home ------------------------------------------
-      //
-        echo '<div class="jumbotron">';
-        $image = "ID_GUIDE_LOGO.png";           
-        $path = "../images/";
-        echo '<img src="'.$path.''.$image.'" />';
-        echo '<p>'."YOU ARE HOME".'</p>';
-        echo '</div>';
+//==========================================================================
 
-      }
+
+	if(isset($_POST['Go'])) 
+	{
+		$search = $_REQUEST['drop'];
+		
+		if(!empty($search)) 
+		{
+			if(!empty($_REQUEST['input'])) 
+			{
+				$input = mysqli_real_escape_string($conn, $_REQUEST['input']);
+
+				switch($search)
+				{
+
+					case "e_animals": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name " . 
+																  "WHERE `" . $search . "`.inv_sci_name LIKE '%" . $input . "%' 
+																	OR `subphylum` LIKE '%" . $input . "%'
+																	OR `reproduction` LIKE '%" . $input . "%'
+																	OR `life_span` LIKE '%" . $input . "%'																	
+																	OR `habitat` LIKE '%" . $input . "%'"; break;
+																	
+					case "e_plants":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name " . 
+																  "WHERE `" . $search . "`.inv_sci_name LIKE '%" . $input . "%' 
+																	OR `root_desc` LIKE '%" . $input . "%'
+																	OR `seed_desc` LIKE '%" . $input . "%'
+																	OR `leaf_desc` LIKE '%" . $input . "%'
+																	OR `flower_desc` LIKE '%" . $input . "%'
+																	OR `stem_desc` LIKE '%" . $input . "%'																	
+																	OR `similar_species` LIKE '%" . $input . "%'"; break;
+					
+					case "e_pathogens":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name " .
+																  "WHERE `" . $search . "`.inv_sci_name LIKE '%" . $input . "%' 
+																	OR `path_type` LIKE '%" . $input . "%'"; break;
+					
+					case "e_agency":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `agency_name` LIKE '%" . $input . "%' 
+																	OR `website` LIKE '%" . $input . "%'
+																	OR `jurisdiction` LIKE '%" . $input . "%'"; break;
+					
+					case "e_distribution_method":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `dist_type` LIKE '%" . $input . "%' 
+																	OR `prev_measures` LIKE '%" . $input . "%'
+																	OR `dist_desc` LIKE '%" . $input . "%'"; break;
+					
+					case "e_family": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `family_name` LIKE '%" . $input . "%' 
+																	OR `family_desc` LIKE '%" . $input . "%'"; break;
+																	
+					case "e_invasive_species": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `inv_sci_name` LIKE '%" . $input . "%' 
+																	OR `inv_com_name` LIKE '%" . $input . "%'
+																	OR `thumbnail` LIKE '%" . $input . "%'
+																	OR `aquatic` LIKE '%" . $input . "%'
+																	OR `inv_desc` LIKE '%" . $input . "%'
+																	OR `concern` LIKE '%" . $input . "%'
+																	OR `management` LIKE '%" . $input . "%'																	
+																	OR `inv_ref` LIKE '%" . $input . "%'"; break;
+					
+					case "e_invasive_status": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `inv_status` LIKE '%" . $input . "%' 
+																	OR `legal_act_num` LIKE '%" . $input . "%'
+																	OR `status_desc` LIKE '%" . $input . "%'"; break;
+					
+					case "e_impacted_species": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `imp_sci_name` LIKE '%" . $input . "%' 
+																	OR `imp_com_name` LIKE '%" . $input . "%'
+																	OR `imp_desc` LIKE '%" . $input . "%'"; break;
+					
+					case "e_life_cycle": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "WHERE `lc_type` LIKE '%" . $input . "%' 
+																	OR `implication` LIKE '%" . $input . "%'
+																	OR `lc_desc` LIKE '%" . $input . "%'"; break;
+					
+					default: echo("Error!"); exit(); break;
+				}
+				
+				
+				$query = mysqli_query($conn, $sql);
+				echo mysqli_error($conn);
+				if($query->num_rows > 0)
+				{
+          echo '<div align="center">';
+          echo '<div class="jumbotron">';
+          echo "<strong>"."Your search returned ".$query->num_rows." results."."</strong>";
+          echo '</div>';
+          echo '</div>';
+					while($row = mysqli_fetch_assoc($query))
+					{
+              if($search == "e_animals" or $search == "e_pathogens" or $search == "e_plants" or $search == "e_invasive_species")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
+                echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
+                $image = $row["thumbnail"];              
+                $path = "../images/";
+                echo '<img src="'.$path.''.$image.'" width="200" />';
+                echo '</div>';
+                echo '</div>';
+              }
+              elseif($search == "e_agency")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["agency_name"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Jurisdiction: </strong>". $row["jurisdiction"] . '</p>';       
+                echo "<p>" ."<strong>Website: </strong>". $row["website"] . '</p>';                                   
+                echo '</div>';
+                echo '</div>';
+              } 
+              elseif($search == "e_distribution_method")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["dist_type"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Description: </strong>". $row["dist_desc"] . '</p>';       
+                echo "<p>" ."<strong>Preventative Measures: </strong>". $row["prev_measures"] . '</p>';                                   
+                echo '</div>';
+                echo '</div>';
+              }     
+              elseif($search == "e_family")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["family_name"]."</u></strong>". '</p>';                             
+                echo '</div>';
+                echo '</div>';
+              }   
+              elseif($search == "e_impacted_species")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["imp_sci_name"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Common Name: </strong>". $row["imp_com_name"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              } 
+              elseif($search == "e_life_cycle")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["lc_type"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Descrption: </strong>". $row["lc_desc"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              }   
+              elseif($search == "e_invasive_status")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["inv_status"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Act: </strong>". $row["legal_act_num"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              }                    
+					}
+				}
+				else 
+				{
+          echo '<div align="center">';
+          echo '<div class="jumbotron">';
+					echo "<br>" . "Sorry, No results found.";
+          echo '</div>';
+          echo '</div>';
+
+				} 
+			}
+			else 
+			{	
+				switch($search)
+				{
+					case "e_animals": 
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  
+																ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name " ; break;
+																	
+					case "e_plants":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  
+																ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name "; break;
+					
+					case "e_pathogens":
+					$sql = "SELECT * FROM " . "`" .$search. "`" . "JOIN `e_invasive_species`  
+																ON `e_invasive_species`.inv_sci_name = " . "`" . $search . "`.inv_sci_name "; break;
+						
+					default: $sql = "SELECT * FROM " . $search;
+				}
+					
+				$query = mysqli_query($conn, $sql); 
+				echo "<br>" . mysqli_error($conn);
+				if($query->num_rows > 0)
+				{
+          echo '<div align="center">';
+          echo '<div class="jumbotron">';
+          echo "<strong>"."Your search returned ".$query->num_rows." results."."</strong>";
+          echo '</div>';
+          echo '</div>';
+					while($row = mysqli_fetch_assoc($query))
+					{
+              if($search == "e_animals" or $search == "e_pathogens" or $search == "e_plants" or $search == "e_invasive_species")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
+                echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
+                $image = $row["thumbnail"];              
+                $path = "../images/";
+                echo '<img src="'.$path.''.$image.'" width="200" />';
+                echo '</div>';
+                echo '</div>';
+              }
+              elseif($search == "e_agency")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["agency_name"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Jurisdiction: </strong>". $row["jurisdiction"] . '</p>';       
+                echo "<p>" ."<strong>Website: </strong>". $row["website"] . '</p>';                                   
+                echo '</div>';
+                echo '</div>';
+              } 
+              elseif($search == "e_distribution_method")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["dist_type"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Description: </strong>". $row["dist_desc"] . '</p>';       
+                echo "<p>" ."<strong>Preventative Measures: </strong>". $row["prev_measures"] . '</p>';                                   
+                echo '</div>';
+                echo '</div>';
+              }     
+              elseif($search == "e_family")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["family_name"]."</u></strong>". '</p>';                             
+                echo '</div>';
+                echo '</div>';
+              }   
+              elseif($search == "e_impacted_species")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["imp_sci_name"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Common Name: </strong>". $row["imp_com_name"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              } 
+              elseif($search == "e_life_cycle")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["lc_type"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Descrption: </strong>". $row["lc_desc"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              }   
+              elseif($search == "e_invasive_status")
+              {
+                echo '<div class="jumbotron">';
+                echo '<div align="left">';
+                echo "<p>" ."<u><strong>".$row["inv_status"]."</u></strong>". '</p>';
+                echo "<p>" ."<strong>Act: </strong>". $row["legal_act_num"] . '</p>';                    
+                echo '</div>';
+                echo '</div>';
+              }                    
+					}	
+					
+				}
+				else 
+				{
+				echo "<br>" . "Sorry, No results found.";
+				}
+			}
+		}
+		else
+			echo "<br>" . "Please Select a Category.";
+	}
     $conn->close();
     ?>
       </div>
