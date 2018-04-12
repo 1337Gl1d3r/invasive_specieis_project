@@ -15,15 +15,23 @@
   </head>
 
   <body>
-  <body background="../images/background.jpeg">
-    <?php include_once "../php/commons.php"; ?>
-    <?php include_once "header.php"; ?>
+
+	  <?php include_once "header.php"; ?>
+
 
     <main role="main" class="container">
 
     <div class="starter-template">
     <?php
-    
+	        
+      // ================================ CONNECTION =====================================
+      include_once "../php/commons.php";
+
+      $conn = get_mysqli_localhost();
+      if ($conn->connect_error) {
+        die("Connection Error: (" . $conn->connect_errno . ")");
+      }	
+
       // ================================ FUNCTIONS ======================================
       
       function randallrelevant($conn, $plant_id)
@@ -93,22 +101,6 @@
       }
       
       // =============================== /FUNCTIONS ======================================    
-
-
-      
-      // =============================== CONNECTING ======================================
-       
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $database = "invdb";
-      // Create connection
-      $conn = mysqli_connect($servername, $username, $password, $database);
-      // Check connection
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-      }
-      echo "Connected successfully";
       if (isset($_GET['edit']))
       {
         $inv_sci_name = mysqli_real_escape_string($conn, $_GET['edit']);
@@ -136,12 +128,6 @@
         }
       }
         
-      // ============================== /CONNECTING ======================================       
-
-
-
-  
-  
       // ================================ ACTIONS ========================================
        
       //
@@ -150,7 +136,6 @@
       elseif (isset($_GET['inv_sci_name']))
       {
         $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
-        //$sql = $sql = "SELECT * FROM `e_invasive_species` WHERE `inv_sci_name`='$inv_sci_name'";
         
         $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,
                             `r_spread_by`.*, `r_legal_status`.*\n"
@@ -168,19 +153,6 @@
         $query = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($query);
         echo '<div class="jumbotron">';
-        // XX FOR DEBUGGING - CAUSING EDIT ISSUES
-        if(isset($_SESSION["xx"]))
-        {
-          echo ('<form class="form-edit" method="post" action="?edit='.$row['inv_sci_name'].'" id="form-edit">');
-          echo ('<input type="hidden" name="type" value="invasive_species">');
-          echo ('<input type="text" name="name" value="'.$row['inv_sci_name'].'">');
-          echo ('<input type="text" name="description" value="'.$row['inv_desc'].'">');
-          echo ('<input type="text" name="concern" value="'.$row['concern'].'">');
-          echo ('<button class="btn btn-lg btn-primary" type="submit">Edit Inavasive Species Info</button>');
-          echo ('</form>');
-        }
-        else
-        {
           // LOOKING AT A PARTICULAR PLANT
           echo '<div align="left">';
           echo '<p>'."<strong>Scientific Name: </strong>".'<i>'.$row["inv_sci_name"] .'</i></a></p>';
@@ -195,7 +167,6 @@
           echo "<p>" ."<strong>Who Can Help: </strong>". $row["agency_name"] .".". '</p>';
           echo "<p>" ."<strong>References: </strong>". $row["inv_ref"] .".". '</p>';            
           echo '</div>';
-        }
         echo '</div>';   
   
       }     
@@ -246,7 +217,7 @@
           { echo '<div class="jumbotron">';
             echo '<div align="left">';
             echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
-            echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
+            echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';
             $image = $row["thumbnail"];              
             $path = "../images/";
             echo '<img src="'.$path.''.$image.'" width="200" />';
