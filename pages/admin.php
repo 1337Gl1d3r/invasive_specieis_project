@@ -1,11 +1,13 @@
 <?php
 include_once "../php/commons.php";
 
+// redirect non-users to homepage
 if(!isset($_SESSION["user"]))
 {
     header("Location: index.php");
 }
 
+// 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     
@@ -15,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
         die("Connection failed: " . mysqli_connect_error());
     }
-    //echo "Connected successfully\n";  
+
     if (isset($_POST['leaf_desc']) && isset($_POST['rootdesc']) && isset($_POST['sciname']) && isset($_POST['Thumbnail']) && isset($_POST['common_name']) && isset($_POST['aquatic_or_not']) && isset($_POST['aquatic_or_not']) && isset($_POST['concern']) && isset($_POST['management']) && isset($_POST['generaldesc']) && isset($_POST['references']) && isset($_POST['flowerdesc']) && isset($_POST['stemdesc']) && isset($_POST['flowcol']) && isset($_POST['leafdesc']) && isset($_POST['seeddesc']) && isset($_POST['simspec']) && isset($_POST['simspec']))
     {
         $sciname = mysqli_real_escape_string($conn, $_REQUEST['sciname']);
