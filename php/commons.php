@@ -1,8 +1,4 @@
 <?php
-
-    /** The base domain of this service. */
-    $SITE_DOMAIN = "localhost";
-
     /** Sanitizes the given string to be echoed as HTML. */
     function sanitizeHTML($html) {
         return filter_var($html, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -22,14 +18,13 @@
     }
 
     /** Logs in to the localhost MySQL server. */
-    function get_mysqli_localhost($db) {
-        $con = new mysqli("localhost", "root", "toor", $db);
+    function get_mysqli_localhost() {
+        $con = new mysqli("localhost", "root", "toor", "invdb");
 		
 		if (mysqli_connect_errno()) {
-            http_response_code(500);
-            exit("Internal Server Error.");
+            printf("Connection Error: %s\n", $con->connect_error);
+            die();
 		}
-
         return $con;
     }
 
