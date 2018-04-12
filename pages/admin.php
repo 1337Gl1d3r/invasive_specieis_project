@@ -425,7 +425,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         
         <label for="Jurisdiction" class="sr-only">Jurisdiction</label>
             <input type="Jurisdiction" id="Jurisdiction" name="Jurisdiction" class="form-control" placeholder="Jurisdiction" required>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Agency</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Jurisdiction</button>
   </form>
   </div>
   <h2>Invasive Status</h2>
