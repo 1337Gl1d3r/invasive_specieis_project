@@ -7,53 +7,16 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
-
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+    <link href="../css/starter-template.css" rel="stylesheet">
   </head>
 
   <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="./">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item active">          
-            <a class="nav-link" href="all_invasive_species.php">All Invasive Species <span class="sr-only">(current)</span></a>
-          </li>          
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-           <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-        <!-- SEARCHING -->
-        <form class="form-inline my-2 my-lg-0" action="index.php" method="post">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="input">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="submit">Search</button>
-        </form>
-      </div>
-    </nav>
+    <?php include_once "../php/commons.php"; ?>
 
     <main role="main" class="container">
 
@@ -231,9 +194,42 @@
           echo "<p>" ."<strong>References: </strong>". $row["inv_ref"] .".". '</p>';            
           echo '</div>';
         }
-        echo '</div>';
-      }   
+        echo '</div>';   
   
+      }     
+      //
+      // --------------------------- Querying a Plant ------------------------------------
+      //
+      elseif(isset($_POST['submit']))
+      {
+        if (isset($_REQUEST['input'])) 
+        {
+
+          $input = mysqli_real_escape_string($conn, $_REQUEST['input']);
+          $sql = $sql = "SELECT * FROM `e_invasive_species` WHERE `inv_sci_name` LIKE '%".$input."%'";
+          $query = mysqli_query($conn, $sql);
+
+          if($query->num_rows > 0)
+          {
+            echo '<p>'."Your search returned ".$query->num_rows." results.".'</p>';
+            while ($row = mysqli_fetch_array($query))
+            { echo '<div class="jumbotron">';
+              echo '<div align="left">';
+              echo '<p>'."<strong>Scientific Name: </strong>".'<i><a href="?inv_sci_name='.$row["inv_sci_name"] .'">' . $row["inv_sci_name"] . '</i></a></p>';
+              echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';    
+              $image = $row["thumbnail"];              
+              $path = "../images/";
+              echo '<img src="'.$path.''.$image.'" width="200" />';
+              echo '</div>';
+              echo '</div>';
+            }
+          }
+          else 
+          {
+            echo "<br>" . "Sorry, No results found.";
+          } 
+        }
+      }
       else
       {
       //

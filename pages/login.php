@@ -1,6 +1,6 @@
 <?php
 include_once "header.php";
-include_once "php/commons.php";
+include_once "../php/commons.php";
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 { 
@@ -50,10 +50,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <title>Sign-in to edit Invasive Species Database</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
+    <link href="../css/signin.css" rel="stylesheet">
   </head>
 
   <body class="text-center">

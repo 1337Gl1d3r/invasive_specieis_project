@@ -1,5 +1,5 @@
 <?php
-include_once "php/commons.php";
+include_once "../php/commons.php";
 
 if(!isset($_SESSION["user"]))
 {
