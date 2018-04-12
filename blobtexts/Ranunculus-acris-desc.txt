@@ -1,5 +1,5 @@
 <html>
-<img src="images/Ranunculus-acris.jpg" width="1000" />
+<img src="../images/Ranunculus-acris.jpg" width="1000" />
 <p>
 <strong>General Description: </strong>
 Tall Buttercup is a member of the Ranunculaceae (Buttercup/ Crowfoot) family, it was introduced from Europe, and it often found in moist pastures.

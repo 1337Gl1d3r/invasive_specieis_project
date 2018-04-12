@@ -1,5 +1,5 @@
 <html>
-<img src="images/Leucanthemum-vulgare.jpg" width="1000" />
+<img src="../images/Leucanthemum-vulgare.jpg" width="1000" />
 <p>
 <strong>General Description: </strong>
 Oxeye Daisy is a member of the       Asteraceae (Sunflower) family and was introduced from Europe as an ornamental. It is often found growing as an ornamental and along roadways.

@@ -1,5 +1,5 @@
 <html>
-<img src="images/Lymantria-dispar-(L.)-Syn.-Porthetria-dispar-(L.).jpg" width="1000" />
+<img src="../images/Lymantria-dispar-(L.)-Syn.-Porthetria-dispar-(L.).jpg" width="1000" />
 <p>
 <strong>General Description: </strong>
 
