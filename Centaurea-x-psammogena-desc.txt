@@ -1,0 +1,7 @@
+<html>
+<img src="images/Centaurea-x-psammogena.jpg" width="1000" />
+<p>
+<strong>General Description: </strong>
+Hybrid Knapweed is a member of the Asteraceae (Sunflower) 
+Family and is a hybrid of Spotted and Diffuse knapweeds.
+Traits are variable and will share traits from both Spotted and Diffuse Knapweeds.
