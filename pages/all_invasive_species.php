@@ -13,7 +13,6 @@
     <link href="../css/starter-template.css" rel="stylesheet">
   </head>
 
-  <body>
   <body background="../images/background.jpeg">
 	  <?php include_once "header.php"; ?>
 
