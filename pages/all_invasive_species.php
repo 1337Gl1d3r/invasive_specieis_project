@@ -32,13 +32,12 @@
 
       // ================================ FUNCTIONS ======================================
       
-      //var_dump($_POST);
+      // var_dump($_POST);
 
-      if (isset($_POST['leaf_desc']) && isset($_POST['rootdesc']) && isset($_POST['common_name']) && isset($_POST['aquatic_or_not']) && isset($_POST['concern']) && isset($_POST['management']) && isset($_POST['references']) && isset($_POST['flowerdesc']) && isset($_POST['stemdesc']) && isset($_POST['seeddesc']) && isset($_POST['simspec']))
+      if (isset($_POST['leaf_desc']) && isset($_POST['rootdesc']) && isset($_POST['common_name']) && isset($_POST['concern']) && isset($_POST['management']) && isset($_POST['references']) && isset($_POST['flowerdesc']) && isset($_POST['stemdesc']) && isset($_POST['seeddesc']) && isset($_POST['simspec']))
       {
         $sciname = $_GET['inv_sci_name'];
         $common_name = mysqli_real_escape_string($conn, $_REQUEST['common_name']);
-        $aquatic_or_not = mysqli_real_escape_string($conn, $_REQUEST['aquatic_or_not']);
         if ($aquatic_or_not === "No")
         {
             $aquatic_or_not = FALSE;
@@ -57,18 +56,18 @@
         $simspec = mysqli_real_escape_string($conn, $_REQUEST['simspec']);
         $rootdesc = mysqli_real_escape_string($conn, $_REQUEST['rootdesc']);
         $leaf_desc = mysqli_real_escape_string($conn, $_REQUEST['leaf_desc']);
-        $sql = "UPDATE `e_invasive_species` SET `inv_com_name`=$common_name, `aquatic`=$aquatic_or_not, `inv_desc`=NULL, `concern`=$concern, `management`=$management, `inv_ref`=$references
-                WHERE inv_sci_name = $sciname";
-        echo mysqli_error($conn);
+        $sql = "UPDATE e_invasive_species SET inv_com_name = '$common_name', concern = '$concern', management = '$management', inv_ref = '$references'
+                WHERE inv_sci_name = '$sciname'";
         if ($conn->query($sql) === TRUE) {
             echo "Successfully Updated";
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        $sql = "UPDATE `e_plants` SET `root_desc`=$rootdesc, `seed_desc`=$seeddesc, `leaf_desc`=$leaf_desc, `flower_desc`=$flowerdesc, `stem_desc`=$stemdesc, `similar_species`=$simspec
-                WHERE inv_sci_name = $sciname";
+        $sql = "UPDATE e_plants SET root_desc='$rootdesc', seed_desc='$seeddesc', leaf_desc='$leaf_desc', flower_desc='$flowerdesc', stem_desc='$stemdesc', similar_species='$simspec'
+                WHERE inv_sci_name = '$sciname'";
+        echo mysqli_error($conn);
         if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
+            echo "Successfully updated!";
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
