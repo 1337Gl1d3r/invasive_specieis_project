@@ -14,10 +14,6 @@ if(isset($_POST['Go']))
 		header("Location: index.php");
 		exit;		
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> f0473c1218d581eff567d19d3a084d9d22745b25
 // 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -764,7 +760,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <input type="text" id="simspec" name="simspec" class="form-control" placeholder="Similar Species" autofocus>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant Info</button>
-    </form>
+      </form>
   </div>
 
   <h2>Add Plant Family</h2>
@@ -944,26 +940,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Distribution Method</button>
   </form>
   </div>
-<<<<<<< HEAD
-		
-=======
   
->>>>>>> f0473c1218d581eff567d19d3a084d9d22745b25
 	<form action="" method="post">
 	<br><br>
 	<!<input type="submit" name="Go" value="Logout" />
 	<button class="btn btn-outline-dark btn-lg " name="Go" type="submit" >Logout</button>
 	<br><br>
-<<<<<<< HEAD
-	</form>
-		
-
-=======
 	</form>  
   
   
   
->>>>>>> f0473c1218d581eff567d19d3a084d9d22745b25
 </div>
 
 
