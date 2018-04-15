@@ -764,7 +764,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   </div>
 
   <h2>Add Plant Family</h2>
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Simple collapsible</button>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Add Plant Family</button>
   <div id="plantfam" class="collapse">
   <form class="form-plantlc" method="post" action="" id="form-plantfam">
         <h1 class="h3 mb-3 font-weight-normal">Please Enter the Family information</h1>
