@@ -33,11 +33,26 @@
       // ================================ FUNCTIONS ======================================
       
       // var_dump($_POST);
+	  
+	  	  
+	  if(isset($_POST['Go'])) 
+		{
+			$sciname = $_GET['inv_sci_name'];
+			$sqld = "DELETE FROM `e_invasive_species`
+					WHERE inv_sci_name = '$sciname'";
+			$query = mysqli_query($conn, $sqld);
+				echo mysqli_error($conn);
+				header("Location: index.php");
+				exit;
+				
+		}
 
       if (isset($_POST['leaf_desc']) && isset($_POST['rootdesc']) && isset($_POST['common_name']) && isset($_POST['concern']) && isset($_POST['management']) && isset($_POST['references']) && isset($_POST['flowerdesc']) && isset($_POST['stemdesc']) && isset($_POST['seeddesc']) && isset($_POST['simspec']))
       {
         $sciname = $_GET['inv_sci_name'];
         $common_name = mysqli_real_escape_string($conn, $_REQUEST['common_name']);
+        $aquatic_or_not = mysqli_real_escape_string($conn, $_REQUEST['aquatic_or_not']);
+
         if ($aquatic_or_not === "No")
         {
             $aquatic_or_not = FALSE;
@@ -51,7 +66,7 @@
         $references = mysqli_real_escape_string($conn, $_REQUEST['references']);
         $flowerdesc = mysqli_real_escape_string($conn, $_REQUEST['flowerdesc']);
         $stemdesc = mysqli_real_escape_string($conn, $_REQUEST['stemdesc']);
-        $leafdesc = mysqli_real_escape_string($conn, $_REQUEST['leafdesc']);
+        $leafdesc = mysqli_real_escape_string($conn, $_REQUEST['leaf_desc']);
         $seeddesc = mysqli_real_escape_string($conn, $_REQUEST['seeddesc']);
         $simspec = mysqli_real_escape_string($conn, $_REQUEST['simspec']);
         $rootdesc = mysqli_real_escape_string($conn, $_REQUEST['rootdesc']);
@@ -72,6 +87,7 @@
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
       }
+
 
       function randallrelevant($conn, $plant_id)
       {
@@ -114,7 +130,6 @@
                   echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"]. '</p>';            
                 }
               }
-
               
         // print out all pathogen information
         $sql2 = "SELECT `e_pathogens`.*, `e_impacted_species`.*, `r_impacts`.*\n"
@@ -191,7 +206,8 @@
       elseif (isset($_GET['inv_sci_name']))
       {
         // If user is logged in, produce an editable information page
-        if(isset($_SESSION["user"])) {
+        if(isset($_SESSION["user"])) 
+		{
           echo '<div class="jumbotron">';
             echo '<form class="edit-info" method="post" action="" id="edit-info">';
             // get scientific name
@@ -225,7 +241,7 @@
                 echo '<p><strong>Concern: </strong></p>';
                 echo '<input name="concern" value="'.$row["concern"].'" style="width: 100%;">';      
                 echo '<p><strong>Spread By: </strong></p>';
-                echo '<input name="spread_by" value="'.$row["dist_tyinpute"].'" style="width: 100%;">'; 
+                echo '<input name="spread_by" value="'.$row["dist_type"].'" style="width: 100%;">'; 
                 echo '<p><strong>Management: </strong></p>';
                 echo '<textarea name="management" row="5" style="width: 100%;">'.$row["management"].'</textarea>';
                 randallrelevant($conn, $row["inv_sci_name"]);           
@@ -238,9 +254,15 @@
               echo '</div>';
               echo '<br><br>';
               echo '<button class="btn btn-lg btn-primary btn-block" type="submit"> Confirm Edits</button>';
+          //  echo '</form>';
+          //echo '</div>';   //nates     
+			echo '<br>';
+			echo '<button class="btn btn-danger" name="Go" type="submit">Delete</button>';
+			//echo '<input type="submit" name="Go" value="Delete" />';
             echo '</form>';
-          echo '</div>';   
-        } else {
+          echo '</div>';
+		
+		} else {
           $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
         
           $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,

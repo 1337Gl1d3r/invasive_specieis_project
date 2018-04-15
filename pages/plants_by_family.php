@@ -134,6 +134,9 @@
       //
       elseif (isset($_GET['inv_sci_name']))
       {
+		$scinamec = $_GET['inv_sci_name'];
+		header("Location: all_invasive_species.php?inv_sci_name=$scinamec");
+		  
         $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
         
         $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,

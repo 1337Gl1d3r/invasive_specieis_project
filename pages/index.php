@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <meta  http-equiv="Content-Type" content="text/html;  charset=iso-8859-1">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Invasive Species DataBase</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
