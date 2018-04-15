@@ -29,11 +29,7 @@ $user = (isset($_SESSION["user"])) ? "admin.php" : "login.php";
         <li class="nav-item active">
         <a class="nav-link" href="all_pathogens.php">All Pathogens <span class="sr-only">(current)</span></a>
         </li>
-<<<<<<< HEAD
         <li class="nav-item active">
-=======
-        <li class="nav-item">
->>>>>>> f0473c1218d581eff567d19d3a084d9d22745b25
         <a class="nav-link" href=<?=$user?> >Login</a>
         </li>
     </ul>
