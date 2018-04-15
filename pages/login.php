@@ -2,6 +2,12 @@
 include_once "header.php";
 include_once "../php/commons.php";
 
+if((isset($_SESSION["user"])))
+{
+	header("Location: admin.php");
+	exit;
+}
+
 if($_SERVER["REQUEST_METHOD"] == "POST")
 { 
 
@@ -27,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 			$query = mysqli_query($conn, $sql); 
 			if($query->num_rows == 1)
 			{
-        $_SESSION["user"] = "true";
+				$_SESSION["user"] = "true";
 				header("Location: admin.php");
 				exit;
 			}

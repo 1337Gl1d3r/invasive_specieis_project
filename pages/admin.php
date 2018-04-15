@@ -7,6 +7,15 @@ if(!isset($_SESSION["user"]))
     header("Location: index.php");
 }
 
+if(isset($_POST['Go'])) 
+	{
+		$query = mysqli_query($conn, $sqld);
+		$_SESSION["user"] = null;
+		//unset($_SESSION["user"]);
+		header("Location: index.php");
+		exit;		
+	}
+
 // 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -285,7 +294,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <input type="text" id="simspec" name="simspec" class="form-control" placeholder="Similar Species" required autofocus>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant Info</button>
-      </form>
+    </form>
   </div>
 
   <h2>Add Plant Family</h2>
@@ -462,6 +471,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Distribution Method</button>
   </form>
   </div>
+		
+	<form action="" method="post">
+	<br><br>
+	<!<input type="submit" name="Go" value="Logout" />
+	<button class="btn btn-outline-dark btn-lg " name="Go" type="submit" >Logout</button>
+	<br><br>
+	</form>
+		
+
 </div>
 
 

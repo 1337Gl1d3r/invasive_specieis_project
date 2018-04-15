@@ -1,3 +1,6 @@
+<?php
+$user = (isset($_SESSION["user"])) ? "admin.php" : "login.php";
+?>
 <!doctype html>
 <html lang="en">
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -27,7 +30,7 @@
         <a class="nav-link" href="all_pathogens.php">All Pathogens <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="login.php">Login</a>
+        <a class="nav-link" href=<?=$user?> >Login</a>
         </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="index.php" method="post">
