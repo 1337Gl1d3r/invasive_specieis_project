@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -760,4 +760,3 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
->>>>>>> ab45fd9a45460b8fd68ca5e2667bb2fff7343c9f
