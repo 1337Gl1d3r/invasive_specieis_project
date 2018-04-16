@@ -754,9 +754,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <input type="text" id="seeddesc" name="seeddesc" class="form-control" placeholder="Seed Description" autofocus>
 
         <label for="simspec" class="sr-only">Similar Species</label>
-        <input type="text" id="Similar Species" name="simspec" class="form-control" placeholder="Similar Species" autofocus>
-
-        <label for="rootdesc" class="sr-only">Root Description</label>
         <input type="text" id="simspec" name="simspec" class="form-control" placeholder="Similar Species" autofocus>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant Info</button>
@@ -764,7 +761,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   </div>
 
   <h2>Add Plant Family</h2>
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Add Plant Family</button>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Simple collapsible</button>
   <div id="plantfam" class="collapse">
   <form class="form-plantlc" method="post" action="" id="form-plantfam">
         <h1 class="h3 mb-3 font-weight-normal">Please Enter the Family information</h1>
