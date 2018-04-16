@@ -133,6 +133,10 @@
       //
       elseif (isset($_GET['inv_sci_name']))
       {
+		  
+		$scinamec = $_GET['inv_sci_name'];
+		header("Location: all_invasive_species.php?inv_sci_name=$scinamec");
+		  
         $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
         
         $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,
@@ -278,6 +282,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
   </body>
 </html>

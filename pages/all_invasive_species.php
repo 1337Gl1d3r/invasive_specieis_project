@@ -30,48 +30,245 @@
         die("Connection Error: (" . $conn->connect_errno . ")");
       }	
 
-      // ================================ FUNCTIONS ======================================
       
-      // var_dump($_POST);
+      
+    // ===================== DETECTS THE DELTE BUTTON BEING PRESSED ======================
+    
+    
+	  if(isset($_POST['KILLPLANT'])) 
+		{
+      // DELETES PLANT
+			$inv_sci_name = $_GET['inv_sci_name'];
+			$sqld = "DELETE FROM `e_invasive_species`
+					WHERE inv_sci_name = '$inv_sci_name'";
+			$query = mysqli_query($conn, $sqld);
+				echo mysqli_error($conn);
+				header("Location: index.php");
+				exit;           
 
-      if (isset($_POST['leaf_desc']) && isset($_POST['rootdesc']) && isset($_POST['common_name']) && isset($_POST['concern']) && isset($_POST['management']) && isset($_POST['references']) && isset($_POST['flowerdesc']) && isset($_POST['stemdesc']) && isset($_POST['seeddesc']) && isset($_POST['simspec']))
+    }
+
+    // =====================================================================================            
+      
+      
+      
+      // ================================ FUNCTIONS ======================================
+       
+      if (isset($_POST['UPDATEPLANT']))
       {
         $sciname = $_GET['inv_sci_name'];
-        $common_name = mysqli_real_escape_string($conn, $_REQUEST['common_name']);
-        if ($aquatic_or_not === "No")
-        {
-            $aquatic_or_not = FALSE;
-        }
-        else
-        {
-            $aquatic_or_not = TRUE;
-        }
-        $concern = mysqli_real_escape_string($conn, $_REQUEST['concern']);
-        $management = mysqli_real_escape_string($conn, $_REQUEST['management']);
-        $references = mysqli_real_escape_string($conn, $_REQUEST['references']);
-        $flowerdesc = mysqli_real_escape_string($conn, $_REQUEST['flowerdesc']);
-        $stemdesc = mysqli_real_escape_string($conn, $_REQUEST['stemdesc']);
-        $leafdesc = mysqli_real_escape_string($conn, $_REQUEST['leafdesc']);
-        $seeddesc = mysqli_real_escape_string($conn, $_REQUEST['seeddesc']);
-        $simspec = mysqli_real_escape_string($conn, $_REQUEST['simspec']);
-        $rootdesc = mysqli_real_escape_string($conn, $_REQUEST['rootdesc']);
-        $leaf_desc = mysqli_real_escape_string($conn, $_REQUEST['leaf_desc']);
-        $sql = "UPDATE e_invasive_species SET inv_com_name = '$common_name', concern = '$concern', management = '$management', inv_ref = '$references'
-                WHERE inv_sci_name = '$sciname'";
-        if ($conn->query($sql) === TRUE) {
-            echo "Successfully Updated";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-        $sql = "UPDATE e_plants SET root_desc='$rootdesc', seed_desc='$seeddesc', leaf_desc='$leaf_desc', flower_desc='$flowerdesc', stem_desc='$stemdesc', similar_species='$simspec'
-                WHERE inv_sci_name = '$sciname'";
-        echo mysqli_error($conn);
-        if ($conn->query($sql) === TRUE) {
-            echo "Successfully updated!";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-      }
+        
+          // ====================== CHECK FOR AQUATIC =======================
+          if (isset($_POST['aquatic_or_not']))
+          {
+            $aquatic = mysqli_real_escape_string($conn, $_REQUEST['aquatic_or_not']);
+            $sql = "UPDATE e_invasive_species SET aquatic = '$aquatic'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }      
+          
+          // ====================== CHECK FOR CONCERN =======================         
+          if (isset($_POST['concern']) && mysqli_real_escape_string($conn, $_REQUEST['concern']) != "")
+          {       
+            $concern = mysqli_real_escape_string($conn, $_REQUEST['concern']);
+            $sql = "UPDATE e_invasive_species SET concern = '$concern'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }
+           
+          
+          // ==================== CHECK FOR COMMON NAME ======================         
+          if (isset($_POST['inv_com_name']) && mysqli_real_escape_string($conn, $_REQUEST['inv_com_name']) != "")
+          {        
+            $inv_com_name = mysqli_real_escape_string($conn, $_REQUEST['inv_com_name']);
+            $sql = "UPDATE e_invasive_species SET inv_com_name = '$inv_com_name'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }         
+                 
+                 
+          // ====================== CHECK DESCRIPTION ========================         
+
+          
+          
+          // *********************** COMPLETE THIS ***************************
+
+          
+          
+          // ====================== CHECK REFERENCES =========================         
+          if (isset($_POST['inv_ref']) && mysqli_real_escape_string($conn, $_REQUEST['inv_ref']) != "")
+          {        
+            $inv_ref = mysqli_real_escape_string($conn, $_REQUEST['inv_ref']);
+            $sql = "UPDATE e_invasive_species SET inv_ref = '$inv_ref'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }                
+           
+           
+          // ====================== CHECK MANAGEMENT =========================         
+          if (isset($_POST['management']) && mysqli_real_escape_string($conn, $_REQUEST['management']) != "")
+          {        
+            $management = mysqli_real_escape_string($conn, $_REQUEST['management']);
+            $sql = "UPDATE e_invasive_species SET management = '$management'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }            
+           
+           
+          // ======================= CHECK THUMBNAIL =========================         
+          if (isset($_POST['thumbnail']) && mysqli_real_escape_string($conn, $_REQUEST['thumbnail']) != "")
+          {        
+            $thumbnail = mysqli_real_escape_string($conn, $_REQUEST['thumbnail']);
+            $sql = "UPDATE e_invasive_species SET thumbnail = '$thumbnail'
+                    WHERE inv_sci_name = '$sciname'";   
+
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                   
+          }        
+          
+
+  // ***********************************************************************
+  //                         IF A PLANT IS BEING ADDED
+  // ***********************************************************************        
+           
+            // ================== CHECK FLOWER DESCRIPTION ===================         
+            if (isset($_POST['flower_desc']) && mysqli_real_escape_string($conn, $_REQUEST['flower_desc']) != "")
+            {        
+              $flower_desc = mysqli_real_escape_string($conn, $_REQUEST['flower_desc']);
+              $sql = "UPDATE e_plants SET flower_desc = '$flower_desc'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                                     
+            }           
+             
+            // =================== CHECK LEAF DESCRIPTION ====================         
+            if (isset($_POST['leaf_desc']) && mysqli_real_escape_string($conn, $_REQUEST['leaf_desc']) != "")
+            {        
+              $leaf_desc = mysqli_real_escape_string($conn, $_REQUEST['leaf_desc']);
+              $sql = "UPDATE e_plants SET leaf_desc = '$leaf_desc'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                                     
+            }             
+             
+     
+            // =================== CHECK ROOT DESCRIPTION ====================         
+            if (isset($_POST['root_desc']) && mysqli_real_escape_string($conn, $_REQUEST['root_desc']) != "")
+            {        
+              $root_desc = mysqli_real_escape_string($conn, $_REQUEST['root_desc']);
+              $sql = "UPDATE e_plants SET root_desc = '$root_desc'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                                     
+            }       
+
+            
+            // =================== CHECK SEED DESCRIPTION ====================         
+            if (isset($_POST['seed_desc']) && mysqli_real_escape_string($conn, $_REQUEST['seed_desc']) != "")
+            {        
+              $seed_desc = mysqli_real_escape_string($conn, $_REQUEST['seed_desc']);
+              $sql = "UPDATE e_plants SET seed_desc = '$seed_desc'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                                     
+            }
+
+
+            // =================== CHECK SIMILAR SPECIES ====================         
+            if (isset($_POST['similar_species']) && mysqli_real_escape_string($conn, $_REQUEST['similar_species']) != "")
+            {        
+              $similar_species = mysqli_real_escape_string($conn, $_REQUEST['similar_species']);
+              $sql = "UPDATE e_plants SET similar_species = '$similar_species'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                                     
+            }
+            
+     
+            // ================= CHECK STEM DESCRIPTION ====================         
+            if (isset($_POST['stem_desc']) && mysqli_real_escape_string($conn, $_REQUEST['stem_desc']) != "")
+            {        
+              $stem_desc = mysqli_real_escape_string($conn, $_REQUEST['stem_desc']);
+              $sql = "UPDATE e_plants SET stem_desc = '$stem_desc'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                          
+            } 
+            
+            // ================= CHECK STEM DESCRIPTION ====================         
+            if (isset($_POST['inv_sci_name']) && mysqli_real_escape_string($conn, $_REQUEST['inv_sci_name']) != "")
+            {        
+              $inv_sci_name = mysqli_real_escape_string($conn, $_REQUEST['inv_sci_name']);
+              $sql = "UPDATE e_invasive_species SET inv_sci_name = '$inv_sci_name'
+                      WHERE inv_sci_name = '$sciname'";   
+
+              // UPDATE THE DB
+              if ($conn->query($sql) == FALSE)
+              {
+                  echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }                          
+            } 
+            
+            echo "<br>Plant record updated successfully!";              
+      }          
+        
+        
+
+        
+        
+
 
       function randallrelevant($conn, $plant_id)
       {
@@ -90,20 +287,20 @@
             if ($result->num_rows > 0)
               {
                 if (isset($_SESSION["user"])) {
-                  echo "<p><strong>Life Cycle: </strong></p>";    
-                  echo '<input name="life_cycle" value="'.$row["lc_type"] . '" style="width: 100%;"><br><br>';
+                  echo '<br><br>';                  
+                  echo "<p>" ."<strong>Life Cycle: </strong>". $row["lc_type"] .".". '</p>';   
                   echo "<p><strong>Flower Description: </strong></p>";      
-                  echo '<textarea name="flowerdesc" row=5 style="width:100%;">'.$row["flower_desc"].'</textarea><br><br>';
+                  echo '<textarea name="flower_desc" row=5 style="width:100%;">'.$row["flower_desc"].'</textarea><br><br>';
                   echo "<p><strong>Leaf Description: </strong></p>"; 
                   echo '<textarea row=5 name="leaf_desc" style="width:100%;">'.$row["leaf_desc"].'</textarea><br><br>';
                   echo "<p><strong>Stem Description: </strong></p>";     
-                  echo '<textarea row=5 name="stemdesc" style="width:100%;">'.$row["stem_desc"].'</textarea><br><br>';
+                  echo '<textarea row=5 name="stem_desc" style="width:100%;">'.$row["stem_desc"].'</textarea><br><br>';
                   echo "<p><strong>Root Description: </strong></p>";     
-                  echo '<textarea row=5 name="rootdesc" style="width:100%;">'.$row["root_desc"].'</textarea><br><br>';
+                  echo '<textarea row=5 name="root_desc" style="width:100%;">'.$row["root_desc"].'</textarea><br><br>';
                   echo "<p><strong>Seed Description: </strong></p>";
-                  echo '<textarea row=5 name="seeddesc" style="width:100%;">'.$row["seed_desc"].'</textarea><br><br>';
+                  echo '<textarea row=5 name="seed_desc" style="width:100%;">'.$row["seed_desc"].'</textarea><br><br>';
                   echo "<p><strong>Similar Species: </strong></p>";            
-                  echo '<input name="simspec" value="'.$row["similar_species"].'" style="width:100%;"><br><br>';
+                  echo '<input name="similar_species" value="'.$row["similar_species"].'" style="width:100%;"><br><br>';
                 } else {       
                   echo "<p>" ."<strong>Life Cycle: </strong>". $row["lc_type"] .".". '</p>';    
                   echo "<p>" ."<strong>Flower Description: </strong>". $row["flower_desc"]. '</p>';      
@@ -114,7 +311,6 @@
                   echo "<p>" ."<strong>Similar Species: </strong>". $row["similar_species"]. '</p>';            
                 }
               }
-
               
         // print out all pathogen information
         $sql2 = "SELECT `e_pathogens`.*, `e_impacted_species`.*, `r_impacts`.*\n"
@@ -156,42 +352,16 @@
               }                        
       }
       
-      // =============================== Edit Function ===================================    
-      if (isset($_GET['edit']))
-      {
-        $inv_sci_name = mysqli_real_escape_string($conn, $_GET['edit']);
-        if (isset($_POST['type']))
-        {
-          $edit_type = $_POST['type'];
-          if ($edit_type==='invasive_species')
-          {
-            if (isset($_POST['name']) && isset($_POST['concern']) && isset($_POST['description']))
-            {
-              $name = mysqli_real_escape_string($conn, $_POST['name']);
-              $concern = mysqli_real_escape_string($conn, $_POST['concern']);
-              $description = mysqli_real_escape_string($conn, $_POST['description']);
-              $sql = "UPDATE `e_invasive_species` SET `inv_sci_name` = '$name', `concern`='$concern', `inv_desc`='$description' WHERE `e_invasive_species`.`inv_sci_name` = '$inv_sci_name'; ";
-              if ($conn->query($sql) === TRUE) 
-              {
-                  echo "Record succesfully updated";
-              } 
-              else 
-              {
-                  echo "Error: " . $sql . "<br>" . $conn->error;
-              }
-            }
-          }
-        }
-      }
-      // ================================ Returning ========================================
-       
+      
+             
       //
       // -------------------------- Clicking on a Plant ----------------------------------
       //
-      elseif (isset($_GET['inv_sci_name']))
+      if (isset($_GET['inv_sci_name']))
       {
         // If user is logged in, produce an editable information page
-        if(isset($_SESSION["user"])) {
+        if(isset($_SESSION["user"])) 
+		{
           echo '<div class="jumbotron">';
             echo '<form class="edit-info" method="post" action="" id="edit-info">';
             // get scientific name
@@ -211,36 +381,38 @@
 
                 . "    WHERE `e_invasive_species`.`inv_sci_name` ='$inv_sci_name'";            
 
-            
+                
             $query = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($query);
-              // LOOKING AT A PARTICULAR PLANT
-              echo '<div align="left">';
-                echo '<p><strong>Scientific Name: </strong><i>'.$row["inv_sci_name"]. '</i></p>';
-                echo '<p><strong>Common Name: </strong></p>';
-                echo '<input name="common_name" value="'.$row["inv_com_name"].'" style="width: 100%"><br><br>';              
-                echo "<p>" . $row["inv_desc"] . '</p>'; 
-                echo "<p><strong>Aquatic: </strong></p>";
-                echo '<input name="aquatic_or_not" value="'.$row["aquatic"] .'" style="width: 100%;">';    
-                echo '<p><strong>Concern: </strong></p>';
-                echo '<input name="concern" value="'.$row["concern"].'" style="width: 100%;">';      
-                echo '<p><strong>Spread By: </strong></p>';
-                echo '<input name="spread_by" value="'.$row["dist_tyinpute"].'" style="width: 100%;">'; 
-                echo '<p><strong>Management: </strong></p>';
-                echo '<textarea name="management" row="5" style="width: 100%;">'.$row["management"].'</textarea>';
-                randallrelevant($conn, $row["inv_sci_name"]);           
-                echo '<p><strong>Legal Status: </strong></p>';
-                echo '<input name="legal_status" value="'. $row["inv_status"]. '" style="width: 100%;"><br><br>';     
-                echo '<p><strong>Who Can Help: </strong></p>';
-                echo '<input name="who_can_help" value="'. $row["agency_name"] .'" style="width: 100%;"><br><br>';
-                echo '<p><strong>References: </strong></p>';
-                echo '<input name="references" value="'. $row["inv_ref"] . '" style="width: 100%;"><br>';            
-              echo '</div>';
-              echo '<br><br>';
-              echo '<button class="btn btn-lg btn-primary btn-block" type="submit"> Confirm Edits</button>';
+            echo '<div align="left">';
+            echo '<p><strong>Scientific Name: </strong></p>';              
+            echo '<input name="inv_sci_name" value="'.$row["inv_sci_name"].'" style="width: 100%"><br><br>';    
+            echo '<p><strong>Common Name: </strong></p>';
+            echo '<input name="inv_com_name" value="'.$row["inv_com_name"].'" style="width: 100%"><br><br>';              
+            echo "<p>" . $row["inv_desc"] . '</p>'; 
+            echo "<p><strong>Aquatic: </strong></p>";
+            echo '<input name="aquatic_or_not" value="'.$row["aquatic"] .'" style="width: 100%;">'; 
+            echo '<br><br>';       
+            echo '<p><strong>Concern: </strong></p>';
+            echo '<input name="concern" value="'.$row["concern"].'" style="width: 100%;">';
+            echo '<br><br>';                 
+            echo "<p>" ."<strong>Spread By: </strong>". $row["dist_type"] .".". '</p>'; 
+            echo '<p><strong>Management: </strong></p>';
+            echo '<textarea name="management" row="5" style="width: 100%;">'.$row["management"].'</textarea>';
+            randallrelevant($conn, $row["inv_sci_name"]);           
+            echo "<p>" ."<strong>Legal Status: </strong>". $row["inv_status"] .".". '</p>';     
+            echo "<p>" ."<strong>Who Can Help: </strong>". $row["agency_name"] .".". '</p>';
+            echo '<p><strong>References: </strong></p>';
+            echo '<input name="inv_ref" value="'. $row["inv_ref"] . '" style="width: 100%;"><br>';            
+            echo '</div>';
+            echo '<br><br>';
+            echo '<button class="btn btn-lg btn-primary btn-block" name="UPDATEPLANT" type="submit"> Confirm Edits</button>';
+            echo '<br>';
+            echo '<button class="btn btn-danger" name="KILLPLANT" type="submit">Delete</button>';  
             echo '</form>';
-          echo '</div>';   
-        } else {
+          echo '</div>';
+		
+		} else {
           $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
         
           $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,
@@ -276,7 +448,10 @@
           echo '</div>';   
         }
   
-      }     
+      }
+      
+      
+      
       //
       // --------------------------- Querying a Plant ------------------------------------
       //

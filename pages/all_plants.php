@@ -134,40 +134,8 @@
       //
       elseif (isset($_GET['inv_sci_name']))
       {
-        $inv_sci_name = mysqli_real_escape_string($conn, $_GET['inv_sci_name']);
-        
-        $sql = "SELECT `e_invasive_species`.*, `r_who_can_help`.*,
-                            `r_spread_by`.*, `r_legal_status`.*\n"
-
-            . "FROM `e_invasive_species`\n"
-            
-            . "    LEFT JOIN `r_who_can_help` ON `r_who_can_help`.`inv_sci_name` = `e_invasive_species`.`inv_sci_name`\n"
-
-            . "    LEFT JOIN `r_spread_by` ON `r_spread_by`.`inv_sci_name` = `e_invasive_species`.`inv_sci_name`\n"
-
-            . "    LEFT JOIN `r_legal_status` ON `r_legal_status`.`inv_sci_name` = `e_invasive_species`.`inv_sci_name`\n"        
-            
-            . "    WHERE `e_invasive_species`.`inv_sci_name` ='$inv_sci_name'";            
-
-        $query = mysqli_query($conn, $sql);
-        $row = mysqli_fetch_assoc($query);
-        echo '<div class="jumbotron">';
-          // LOOKING AT A PARTICULAR PLANT
-          echo '<div align="left">';
-          echo '<p>'."<strong>Scientific Name: </strong>".'<i>'.$row["inv_sci_name"] .'</i></a></p>';
-          echo "<p>"."<strong>Common Name: </strong>".$row["inv_com_name"] . '</p>';              
-          echo "<p>" . $row["inv_desc"] . '</p>'; 
-          echo "<p>" ."<strong>Aquatic: </strong>". $row["aquatic"] .".". '</p>';    
-          echo "<p>" ."<strong>Concern: </strong>". $row["concern"] . '</p>';      
-          echo "<p>" ."<strong>Spread By: </strong>". $row["dist_type"] .".". '</p>'; 
-          echo "<p>" ."<strong>Management: </strong>". $row["management"] . '</p>';
-          randallrelevant($conn, $row["inv_sci_name"]);           
-          echo "<p>" ."<strong>Legal Status: </strong>". $row["inv_status"] .".". '</p>';     
-          echo "<p>" ."<strong>Who Can Help: </strong>". $row["agency_name"] .".". '</p>';
-          echo "<p>" ."<strong>References: </strong>". $row["inv_ref"] .".". '</p>';            
-          echo '</div>';
-        echo '</div>';   
-  
+        $scinamec = $_GET['inv_sci_name'];
+		header("Location: all_invasive_species.php?inv_sci_name=$scinamec");
       }     
       //
       // --------------------------- Querying a Plant ------------------------------------
@@ -252,6 +220,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
   </body>
 </html>
