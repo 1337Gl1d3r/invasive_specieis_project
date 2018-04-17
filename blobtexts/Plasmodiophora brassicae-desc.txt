@@ -1,5 +1,5 @@
 <html>
-<img src="../images/Plasmodiophora-brassicae.jpg" width="1000" />
+<img src="../images/Plasmodiophora-brassicae.jpg" class="img-fluid" alt="Responsive image">
 <p>
 <strong>General Description: </strong>
 
