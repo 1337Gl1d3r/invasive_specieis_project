@@ -22,7 +22,7 @@
   
   <div class="jumbotron">
   <div align="center">
-  <img src="../images/ID_GUIDE_LOGO.png"/>
+  <img src="../images/ID_GUIDE_LOGO.png" class="img-fluid" alt="Responsive image">
 
   <p><body>
     <h3>Search </h3>
