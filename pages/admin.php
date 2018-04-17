@@ -118,11 +118,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                  
           // ====================== CHECK DESCRIPTION ========================         
 
-          
-          
-          // *********************** COMPLETE THIS ***************************
+          if (isset($_POST['generaldesc']) && mysqli_real_escape_string($conn, $_REQUEST['generaldesc']) != "")
+          {        
+            $generaldesc = mysqli_real_escape_string($conn, $_REQUEST['generaldesc']);
+            $sql = "UPDATE e_invasive_species SET inv_desc = '$generaldesc'
+                    WHERE inv_sci_name = '$sciname'";   
 
-          
+            // UPDATE THE DB
+            if ($conn->query($sql) == FALSE)
+            {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }                                     
+          }     
           
           // ====================== CHECK REFERENCES =========================         
           if (isset($_POST['references']) && mysqli_real_escape_string($conn, $_REQUEST['references']) != "")
