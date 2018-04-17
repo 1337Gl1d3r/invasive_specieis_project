@@ -406,7 +406,101 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
           }
         }
     }
+ 
+
+// ***********************************************************************
+//                    ADDING/DELETING A PLANT COLOURS
+// ***********************************************************************       
     
+    elseif (isset($_POST['csciname']))
+    {
+        // ===============================================================
+        //                  ADDING PLANT COLOURS
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['csciname']);
+        $colour = mysqli_real_escape_string($conn, $_REQUEST['colour']);        
+        $sql = "INSERT INTO `m_flower_colour` (`inv_sci_name`, `color`) 
+        VALUES ('$sciname','$colour')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname is now $colour!";  
+        }
+    }
+    
+    elseif (isset($_POST['cscinamekill']))
+    {
+        // ===============================================================
+        //                     REMOVING PLANT COLOURS
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['cscinamekill']);
+        $colour = mysqli_real_escape_string($conn, $_REQUEST['colourkill']);        
+        $sql = "DELETE FROM `m_flower_colour`
+        WHERE (color = '$colour' AND inv_sci_name = '$sciname')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname is no longer $colour!";  
+        }
+    }    
+
+
+ 
+// ***********************************************************************
+//                   ADDING/DELETING A PLANT FAMILY RELATION
+// ***********************************************************************       
+    
+    elseif (isset($_POST['famname']))
+    {
+        // ===============================================================
+        //               INSERT NEW PLANT-FAMILY RELATION
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['sciname']);
+        $famname = mysqli_real_escape_string($conn, $_REQUEST['famname']);        
+        $sql = "INSERT INTO `r_member_of` (`inv_sci_name`, `family_name`) 
+        VALUES ('$sciname','$famname')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname is now a member of $famname!";  
+        }
+    }
+    
+    elseif (isset($_POST['famnamekill']))
+    {
+        // ===============================================================
+        //                  DELETE PLANT-FAMILY RELATION
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['scinamekill']);
+        $famname = mysqli_real_escape_string($conn, $_REQUEST['famnamekill']);        
+        $sql = "DELETE FROM `r_member_of`
+        WHERE (family_name = '$famname' AND inv_sci_name = '$sciname')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname is no longer a member of $famname!";  
+        }
+    }    
     
 // ***********************************************************************
 //                        ADDING A NEW PLANT FAMILY
@@ -496,7 +590,54 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
 
-
+    
+// ***********************************************************************
+//             ADDING/DELETING A PLANT LIFE CYCLE RELATIONSHIP
+// ***********************************************************************       
+    
+    elseif (isset($_POST['lifename']))
+    {
+        // ===============================================================
+        //              INSERT NEW PLANT-LIFE CYCLE RELATION
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['sciname']);
+        $lifename = mysqli_real_escape_string($conn, $_REQUEST['lifename']);        
+        $sql = "INSERT INTO `r_has` (`lc_type`, `inv_sci_name`) 
+        VALUES ('$lifename','$sciname')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname how has a $lifename life cycle!";
+        }
+    }
+    
+    elseif (isset($_POST['lifenamekill']))
+    {
+        // ===============================================================
+        //                  DELETE PLANT-LIFE CYCLE RELATION
+        // ===============================================================       
+        $sciname = mysqli_real_escape_string($conn, $_REQUEST['scinamekill']);
+        $lifenamekill = mysqli_real_escape_string($conn, $_REQUEST['lifenamekill']);        
+        $sql = "DELETE FROM `r_has`
+        WHERE (inv_sci_name = '$sciname' AND lc_type = '$lifenamekill')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$sciname no longer has a $lifenamekill life cycle!";  
+        }
+    }   
+    
+    
 // ***********************************************************************
 //                      ADDING A NEW IMPACTED SPECIES
 // ***********************************************************************        
@@ -549,7 +690,53 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
     
+// ***********************************************************************
+//         ADDING/DELETING A PATHOGEN IMPACTED SPECIES RELATIONSHIP
+// ***********************************************************************       
     
+    elseif (isset($_POST['pathname']))
+    {
+        // ===============================================================
+        //          INSERT NEW PATHOGEN IMPACTED SPECIES RELATION
+        // ===============================================================       
+        $pathname = mysqli_real_escape_string($conn, $_REQUEST['pathname']);
+        $impname = mysqli_real_escape_string($conn, $_REQUEST['impname']);        
+        $sql = "INSERT INTO `r_impacts` (`inv_sci_name`, `imp_sci_name`) 
+        VALUES ('$pathname','$impname')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$pathname impacts $impname!";    
+        }
+    }
+    
+    elseif (isset($_POST['pathnamekill']))
+    {
+        // ===============================================================
+        //           REMOVE PATHOGEN IMPACTED SPECIES RELATION
+        // ===============================================================       
+        $pathnamekill = mysqli_real_escape_string($conn, $_REQUEST['pathnamekill']);
+        $impnamekill = mysqli_real_escape_string($conn, $_REQUEST['impnamekill']);        
+        $sql = "DELETE FROM `r_impacts`
+        WHERE (inv_sci_name = '$pathnamekill' AND imp_sci_name = '$impnamekill')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$pathnamekill no longer impacts $impnamekill!";    
+        }
+    }      
+
+   
 // ***********************************************************************
 //                          ADDING A NEW AGENCY
 // ***********************************************************************           
@@ -600,7 +787,55 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
     
+
+// ***********************************************************************
+//           ADDING/DELETING AGENCY INASIVE SPECIES RELATION
+// ***********************************************************************       
     
+    elseif (isset($_POST['saname']))
+    {
+        // ===============================================================
+        //          INSERT AGENCY INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['saname']);
+        $agent = mysqli_real_escape_string($conn, $_REQUEST['plantcops']);        
+        $sql = "INSERT INTO `r_who_can_help` (`inv_sci_name`, `agency_name`) 
+        VALUES ('$invname','$agent')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$agent now helps with $invname!";    
+        }
+    }
+    
+    elseif (isset($_POST['sanamekill']))
+    {
+        // ===============================================================
+        //            REMOVE AGENCY INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['sanamekill']);
+        $agent = mysqli_real_escape_string($conn, $_REQUEST['plantcopskill']);     
+        $sql = "DELETE FROM `r_who_can_help`
+        WHERE (inv_sci_name = '$invname' AND agency_name = '$agent')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$agent no longer helps with $invname!";    
+        }
+    }          
+
+
+  
 // ***********************************************************************
 //                       ADDING NEW INVASIVE STATUS
 // ***********************************************************************        
@@ -637,6 +872,52 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
           echo "<br>New Invasive Status record created successfully!";          
         }
     }
+ 
+ 
+// ***********************************************************************
+//           ADDING/DELETING STATUS INASIVE SPECIES RELATION
+// ***********************************************************************       
+    elseif (isset($_POST['statinvname']))
+    {
+        // ===============================================================
+        //          INSERT STATUS INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['statinvname']);
+        $invdesc = mysqli_real_escape_string($conn, $_REQUEST['invdesc']);        
+        $sql = "INSERT INTO `r_legal_status` (`inv_sci_name`, `inv_status`) 
+        VALUES ('$invname','$invdesc')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$invname now has a status of $invdesc!";    
+        }
+    }
+    
+    elseif (isset($_POST['statinvnamekill']))
+    {
+        // ===============================================================
+        //            REMOVE STATUS INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['statinvnamekill']);
+        $invdesc = mysqli_real_escape_string($conn, $_REQUEST['invdesckill']);           
+        $sql = "DELETE FROM `r_legal_status`
+        WHERE (inv_sci_name = '$invname' AND inv_status = '$invdesc')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$invname no longer has a status of $invdesc!";    
+        }
+    }      
     
     
 // ***********************************************************************
@@ -689,6 +970,53 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
           echo "<br>New Distribution Method record created successfully!";     
         }
     }
+    
+// ***********************************************************************
+//           ADDING/DELETING DISTRIBUTION INASIVE SPECIES RELATION
+// ***********************************************************************       
+    elseif (isset($_POST['distsci']))
+    {
+        // ===============================================================
+        //          INSERT DISTRIBUTION INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['distsci']);
+        $dtype = mysqli_real_escape_string($conn, $_REQUEST['dtypex']);        
+        $sql = "INSERT INTO `r_spread_by` (`inv_sci_name`, `dist_type`) 
+        VALUES ('$invname','$dtype')";      
+      
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$invname is spread by $dtype!";    
+        }
+    }
+    
+    elseif (isset($_POST['distscikill']))
+    {
+        // ===============================================================
+        //          REMOVE DISTRIBUTION INVASIVE SPECIES RELATION
+        // ===============================================================       
+        $invname = mysqli_real_escape_string($conn, $_REQUEST['distscikill']);
+        $dtype = mysqli_real_escape_string($conn, $_REQUEST['dtypex']);           
+        $sql = "DELETE FROM `r_spread_by`
+        WHERE (inv_sci_name = '$invname' AND dist_type = '$dtype')";
+        
+        // UPDATE THE DB
+        if ($conn->query($sql) == FALSE)
+        {
+            echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        }
+        else
+        {
+          echo "<br>$invname is no longer spread by $dtype!";    
+        }
+    }      
+    
+    
     $conn->close();
 }
 ?>
@@ -708,6 +1036,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 
 <div class="container">
+   <h2>==============================================================</h2>
+   <h2> </h2>
   <h2>Add Plant</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plant">Add Plant</button>
   <div id="plant" class="collapse">
@@ -766,9 +1096,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant Info</button>
       </form>
   </div>
+     <h2> </h2>
+   <h2>==============================================================</h2>
+        <h2> </h2>
 
+        
+   <h2>Assign a Colour to a Plant</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#colour">Assign a Colour to a Plant</button>
+  <div id="colour" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-addfam">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Colour information</h1>
+        <label for="csciname" class="sr-only">Scientific Name</label>
+        <input type="name" id="csciname" name="csciname" class="form-control" placeholder="Scientific Name" required>
+        <label for="colour" class="sr-only">Colour</label>
+        <input type="text" id="colour" name="colour" class="form-control" placeholder="Colour" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Assign a Colour to a Plant</button>
+  </form>
+  </div>  
+  
+  <h2>Remove a Colour from a Plant</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#killcolour">Remove Colour from a Plant</button>
+  <div id="killcolour" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-killfam">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Colour information</h1>
+        <label for="cscinamekill" class="sr-only">Scientific Name</label>
+        <input type="name" id="cscinamekill" name="cscinamekill" class="form-control" placeholder="Scientific Name" required>
+        <label for="colourkill" class="sr-only">Colour</label>
+        <input type="text" id="colourkill" name="colourkill" class="form-control" placeholder="Colour" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Remove Colour from a Plant</button>
+  </form>
+  </div>          
+        
+       <h2> </h2>
+   <h2>==============================================================</h2>
+        <h2> </h2>
+        
   <h2>Add Plant Family</h2>
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Simple collapsible</button>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantfam">Add Plant Family</button>
   <div id="plantfam" class="collapse">
   <form class="form-plantlc" method="post" action="" id="form-plantfam">
         <h1 class="h3 mb-3 font-weight-normal">Please Enter the Family information</h1>
@@ -779,7 +1143,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant Family</button>
   </form>
   </div>
-
+ 
+  <h2>Add a Plant to a Family</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addfam">Add Plant to a Family</button>
+  <div id="addfam" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-addfam">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Family information</h1>
+        <label for="sciname" class="sr-only">Scientific Name</label>
+        <input type="name" id="sciname" name="sciname" class="form-control" placeholder="Scientific Name" required>
+        <label for="famname" class="sr-only">Family Name</label>
+        <input type="text" id="famname" name="famname" class="form-control" placeholder="Family Name" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant-Family Relationship</button>
+  </form>
+  </div>  
+  
+  <h2>Remove Plant from a Family</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#killfam">Remove Plant from a Family</button>
+  <div id="killfam" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-killfam">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Family information</h1>
+        <label for="scinamekill" class="sr-only">Scientific Name</label>
+        <input type="name" id="scinamekill" name="scinamekill" class="form-control" placeholder="Scientific Name" required>
+        <label for="famnamekill" class="sr-only">Family Name</label>
+        <input type="text" id="famnamekill" name="famnamekill" class="form-control" placeholder="Family Name" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Remove Plant-Family Relationship</button>
+  </form>
+  </div>   
+   <h2> </h2>
+   <h2>==============================================================</h2> 
+     <h2> </h2>
   <h2>Add Plant Life Cycle</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#plantlife">Add Plant Life Cycle</button>
   <div id="plantlife" class="collapse">
@@ -795,6 +1187,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
   </form>
   </div>
 
+  
+  <h2>Add a Plant to a Life Cycle</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addlife">Add plant to a Life Cycle</button>
+  <div id="addlife" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-addlife">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Life Cycle information</h1>
+        <label for="sciname" class="sr-only">Scientific Name</label>
+        <input type="name" id="sciname" name="sciname" class="form-control" placeholder="Scientific Name" required>
+        <label for="lifename" class="sr-only">Life Cycle Name</label>
+        <input type="text" id="lifename" name="lifename" class="form-control" placeholder="Life Cycle Name" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Plant-Life Cycle Relationship</button>
+  </form>
+  </div>  
+  
+  <h2>Remove Plant from a Life Cycle</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#removelife">Remove Plant from a Life Cycle</button>
+  <div id="removelife" class="collapse">
+  <form class="form-plantlc" method="post" action="" id="form-removelife">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Plant and Life Cycle information</h1>
+        <label for="scinamekill" class="sr-only">Scientific Name</label>
+        <input type="name" id="scinamekill" name="scinamekill" class="form-control" placeholder="Scientific Name" required>
+        <label for="lifenamekill" class="sr-only">Life Cycle Name</label>
+        <input type="text" id="lifenamekill" name="lifenamekill" class="form-control" placeholder="Life Cycle Name" autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Remove Plant-Life Cycle Relationship</button>
+  </form>
+  </div>    
+   <h2> </h2>
+   <h2>==============================================================</h2> 
+     <h2> </h2>
   <h2>Add Animal</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#animals">Add Animal</button>
   <div id="animals" class="collapse">
@@ -839,6 +1260,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Animal</button>
   </form>
   </div>
+   <h2> </h2>
+   <h2>==============================================================</h2> 
+     <h2> </h2>
   <h2>Add Pathogen</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#pathogen">Add Pathogen</button>
   <div id="pathogen" class="collapse">
@@ -873,6 +1297,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enter Pathogen</button>
   </form>
   </div>
+  
+       <h2> </h2>
+   <h2>==============================================================</h2>
+        <h2> </h2>
+  
   <h2>Add Species Impacted by Pathogen</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#pathspec">Add Species Impacted by Pathogen</button>
   <div id="pathspec" class="collapse">
@@ -890,6 +1319,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             <button class="btn btn-lg btn-primary btn-block" type="submit">Add Species Impacted by Pathogen</button>
   </form>
   </div>
+  
+  <h2>Connect Impacted Species to Pathogen</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#whodunnit">Connect Impacted Species to Pathogen</button>
+  <div id="whodunnit" class="collapse">
+  <form class="form-specimp" method="post" action="" id="form-specimp">
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter Invasive Species and Impacted Species information</h1>
+        
+        <label for="pathname" class="sr-only">Scientific Pathogen Name</label>
+            <input type="pathname" id="pathname" name="pathname" class="form-control" placeholder="Scientific Pathogen Name" required autofocus>
+            
+        <label for="impname" class="sr-only">Scientific Impacted Species Name</label>
+            <input type="impname" id="impname" name="impname" class="form-control" placeholder="Scientific Impacted Species Name" autofocus>
+        
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connect Impacted Species to Pathogen</button>
+  </form>
+  </div> 
+  
+  
+  <h2>Remove Impacted Species from Pathogen</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#whodunnitkill">Remove Impacted Species from Pathogen</button>
+  <div id="whodunnitkill" class="collapse">
+  <form class="form-specimp" method="post" action="" id="form-specimp">
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter Invasive Species and Impacted Species information</h1>
+        
+        <label for="pathnamekill" class="sr-only">Scientific Pathogen Name</label>
+            <input type="pathnamekill" id="pathnamekill" name="pathnamekill" class="form-control" placeholder="Scientific Pathogen Name" required autofocus>
+            
+        <label for="impnamekill" class="sr-only">Scientific Impacted Species Name</label>
+            <input type="impnamekill" id="impnamekill" name="impnamekill" class="form-control" placeholder="Scientific Impacted Species Name" autofocus>
+        
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Remove Impacted Species from Pathogen</button>
+  </form>
+  </div>   
+     <h2> </h2>
+   <h2>==============================================================</h2> 
+     <h2> </h2>
+  
   <h2>Add Agency</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#agency">Add Agency</button>
   <div id="agency" class="collapse">
@@ -904,9 +1370,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         
         <label for="Jurisdiction" class="sr-only">Jurisdiction</label>
             <input type="Jurisdiction" id="Jurisdiction" name="Jurisdiction" class="form-control" placeholder="Jurisdiction" >
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Jurisdiction</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Agency</button>
   </form>
   </div>
+  
+
+  <h2>Connect an Agency to an Invasive Species</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#agencycops">Connect an Agency to an Invasive Species</button>
+  <div id="agencycops" class="collapse">
+  <form class="form-agency" method="post" action="" id="form-agency">
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter Invasive Species and Agency information</h1>
+ 
+        <label for="saname" class="sr-only">Scientific name</label>
+            <input type="saname" id="saname" name="saname" class="form-control" placeholder="Scientific Name" required autofocus> 
+ 
+        <label for="plantcops" class="sr-only">Agency Name</label>
+            <input type="plantcops" id="plantcops" name="plantcops" class="form-control" placeholder="Agency Name" required autofocus>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connect an Agency to an Invasive Species</button>
+  </form>
+  </div>  
+  
+  
+  <h2>Remove an Agency from an Invasive Species</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#agencycopskill">Remove an Agency from an Invasive Species</button>
+  <div id="agencycopskill" class="collapse">
+  <form class="form-agency" method="post" action="" id="form-agency">
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter Invasive Species and Agency information</h1>
+ 
+        <label for="sanamekill" class="sr-only">Scientific name</label>
+            <input type="sanamekill" id="sanamekill" name="sanamekill" class="form-control" placeholder="Scientific Name" required autofocus> 
+ 
+        <label for="plantcopskill" class="sr-only">Agency Name</label>
+            <input type="plantcopskill" id="plantcopskill" name="plantcopskill" class="form-control" placeholder="Agency Name" required autofocus>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Remove an Agency from an Invasive Species</button>
+  </form>
+  </div>   
+  
+
+     <h2> </h2>
+   <h2>==============================================================</h2> 
+     <h2> </h2>  
+  
   <h2>Invasive Status</h2>
   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#invstatus">Add Invasive Status</button>
   <div id="invstatus" class="collapse">
@@ -927,8 +1433,49 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
   </form>
   </div>
-  <h2>Distribution Method</h2>
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#distrmethod">Add Species Impacted by Pathogen</button>
+  
+  
+  <h2>Assign an Invasive Species a Invasive Status</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#assinvstat">Assign an Invasive Species a Invasive Status</button>
+  <div id="assinvstat" class="collapse">
+  <form class="form-invstat" method="post" action="" id="form-invstat">
+  
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter the Invasive Species and Invasive Status information</h1>
+        <label for="statinvname" class="sr-only">Scientific name</label>
+            <input type="statinvname" id="statinvname" name="statinvname" class="form-control" placeholder="Scientific Name" required autofocus> 
+        
+        <label for="invdesc" class="sr-only">Invasive Status</label>
+            <input type="invdesc" id="invdesc" name="invdesc" class="form-control" placeholder="Invasive Status" autofocus>
+        
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Assign an Invasive Species a Invasive Status</button>                  
+
+  </form>
+  </div>  
+  
+  
+   <h2>Remove an Invasive Species from a Invasive Status</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#assinvstatkill">Remove an Invasive Species from a Invasive Status</button>
+  <div id="assinvstatkill" class="collapse">
+  <form class="form-invstat" method="post" action="" id="form-invstat">
+  
+  <h1 class="h3 mb-3 font-weight-normal">Please Enter the Invasive Species and Invasive Status information</h1>
+        <label for="statinvnamekill" class="sr-only">Scientific name</label>
+            <input type="statinvnamekill" id="statinvnamekill" name="statinvnamekill" class="form-control" placeholder="Scientific Name" required autofocus> 
+        
+        <label for="invdesc" class="sr-only">Invasive Status</label>
+            <input type="invdesckill" id="invdesckill" name="invdesckill" class="form-control" placeholder="Invasive Status" autofocus>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Remove an Invasive Species from a Invasive Status</button>                  
+
+  </form>
+  </div>   
+  
+       <h2> </h2>
+   <h2>==============================================================</h2>
+        <h2> </h2>
+  
+  <h2>Add Distribution Method</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#distrmethod">Add Distribution Method</button>
   <div id="distrmethod" class="collapse">
   <form class="form-dm" method="post" action="" id="form-dm">
         <h1 class="h3 mb-3 font-weight-normal">Please Enter the Distribution Method information</h1>
@@ -944,6 +1491,40 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Distribution Method</button>
   </form>
   </div>
+  
+  
+   <h2>Connect an Invasive Species to a Distribution Method</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#distdist">Connect an Invasive Species to a Distribution Method</button>
+  <div id="distdist" class="collapse">
+  <form class="form-dm" method="post" action="" id="form-dm">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Invasive Species and Distribution Method information</h1>
+
+   <label for="distsci" class="sr-only">Scientific name</label>
+        <input type="distsci" id="distsci" name="distsci" class="form-control" placeholder="Scientific Name" required autofocus> 
+        
+		<label for="dtypex" class="sr-only">Distribution Method</label>
+        <input type="dtypex" id="dtypex" name="dtypex" class="form-control" placeholder="Distribution Method" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connect an Invasive Species to a Distribution Method</button>
+  </form>
+  </div> 
+  
+  
+   <h2>Remove an Invasive Species from a Distribution Method</h2>
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#distdistkill">Remove an Invasive Species from a Distribution Method</button>
+  <div id="distdistkill" class="collapse">
+  <form class="form-dm" method="post" action="" id="form-dm">
+        <h1 class="h3 mb-3 font-weight-normal">Please Enter the Invasive Species and Distribution Method information</h1>
+
+   <label for="distscikill" class="sr-only">Scientific name</label>
+        <input type="distscikill" id="distscikill" name="distscikill" class="form-control" placeholder="Scientific Name" required autofocus> 
+        
+		<label for="dtypex" class="sr-only">Distribution Method</label>
+        <input type="dtypex" id="dtypex" name="dtypex" class="form-control" placeholder="Distribution Method" required autofocus>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Remove an Invasive Species from a Distribution Method</button>
+  </form>
+  </div>   
+  
+  
   
 	<form action="" method="post">
 	<br><br>
